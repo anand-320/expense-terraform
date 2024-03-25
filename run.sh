@@ -11,6 +11,6 @@ if [ -z "$action"]; then
   exit 2
 fi
 
-rm -rs .terraform/terraform.tfstate
+rm -rf .terraform/terraform.tfstate
 terraform init -backend-config=env-$env/state.tfvars
 terraform $action -var-file=env-$env/main.tfvars
