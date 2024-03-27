@@ -1,7 +1,7 @@
 format_version: 10
 pipelines:
   expense-tf-apply:
-    group: Terraform1
+    group: Terraform
     materials:
       git-4f9022f:
         git: https://github.com/anand-320/expense-terraform.git
