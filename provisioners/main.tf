@@ -22,3 +22,17 @@ resource "aws_instance" "test" {
 data "aws_security_group" "selected" {
   name = "allow-all"
 }
+resource "null_resource" "test1" {
+  provisioner "remote-exec" {
+    ami           = "ami-05f020f5935e52dc4"
+    instance_type = "t3.micro"
+    vpc_security_group_ids = [ data.aws_security_group.selected.id ]
+
+
+  }
+
+  inline = {
+    "sudo dnf install nginx -y",
+    "sudo systemctl start nginx"
+  }
+}
