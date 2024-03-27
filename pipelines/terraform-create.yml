@@ -3,7 +3,7 @@ pipelines:
   expense-tf-apply:
     group: terraform
     materials:
-      git-7f8559b:
+      git-4f9022f:
         git: https://github.com/anand-320/expense-terraform.git
         shallow_clone: false
         auto_update: true
