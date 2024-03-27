@@ -1,7 +1,7 @@
 format_version: 10
 pipelines:
   expense-tf-apply:
-    group: terraform
+    group: Terraform
     materials:
       git-4f9022f:
         git: https://github.com/anand-320/expense-terraform.git
@@ -9,7 +9,7 @@ pipelines:
         auto_update: true
         branch: main
     stages:
-      - Dev:
+      - DEV:
           fetch_materials: true
           environment_variables:
             env: dev
@@ -18,5 +18,5 @@ pipelines:
           jobs:
             terraform-apply:
               tasks:
-              - exec: {command: terraform, argument: [ "init", "-backend-config=env-dev/state.tfvars" ], run_if: passed}
-              - exec: {command: terraform, argument: [ "apply", "-var-file=env-dev/main.tfvars", "-auto-approve" ], run_if: passed}
+                - exec: {command: terraform, arguments: [ "init", "-backend-config=env-dev/state.tfvars" ], run_if: passed}
+                - exec: {command: terraform, arguments: [ "apply", "-var-file=env-dev/main.tfvars", "-auto-approve" ], run_if: passed}
