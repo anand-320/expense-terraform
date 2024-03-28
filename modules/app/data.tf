@@ -4,6 +4,7 @@ data "aws_ami" "example" {
   owners      = ["973714476881"]
 
 }
+
 data "aws_security_group" "selected" {
   name = "allow-all"
 }
