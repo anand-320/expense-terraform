@@ -2,15 +2,14 @@ env=$1
 action=$2
 
 if [ -z "$env" ]; then
-  echo "input (dev|qa|state|prod) is not provided"
+  echo "Input env(dev|qa|state|prod) missing"
   exit 1
 fi
 
 if [ -z "$action" ]; then
-  echo "input action (apply|destroy) is not provided"
+  echo "Input action (apply|destroy) missing"
   exit 1
 fi
-
 
 rm -rf .terraform/terraform.tfstate
 terraform init -backend-config=env-$env/state.tfvars
