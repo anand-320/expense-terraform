@@ -9,3 +9,4 @@ module "frontend" {
   env           = var.env
   zone_id       = var.zone_id
 }
+
