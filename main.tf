@@ -4,6 +4,6 @@ module "frontend" {
   component     = "frontend"
   ssh_user      = var.ssh_user
   ssh_pass      = var.ssh_pass
-  env           = var.envv
+  env           = var.env
   zone_id       = var.zone_id
 }
