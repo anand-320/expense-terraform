@@ -27,6 +27,6 @@ resource "null_resource" "ansible" {
   name    = "${var.component}-${var.env}"
   type    = "A"
   zone_id = var.zone_id
-  records = [aws_instance.instance.public_ip]
+  records = [aws_instance.instance.private_ip]
   ttl     = 30
 }
