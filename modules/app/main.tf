@@ -8,6 +8,7 @@ resource "aws_instance" "instance" {
     env  = var.env
   }
 }
+
 resource "null_resource" "ansible" {
   provisioner "remote-exec" {
 
@@ -23,7 +24,9 @@ resource "null_resource" "ansible" {
       "ansible-pull -i localhost, -U https://github.com/anand-320/expense-ansible expense.yml -e env=${var.env} -e role_name=${var.component}"
     ]
   }
-}resource "aws_route53_record" "record" {
+}
+
+resource "aws_route53_record" "record" {
   name    = "${var.component}-${var.env}"
   type    = "A"
   zone_id = var.zone_id
