@@ -5,6 +5,7 @@ resource "aws_instance" "instance" {
 
   tags = {
     name = var.component
+    env  = var.env
   }
 }
 resource "null_resource" "ansible" {
