@@ -13,6 +13,7 @@ pipelines:
           fetch_materials: true
           environment_variables:
             env: dev
+            TF_VAR_vault_token : hvs.rmuLFsX9cdGvHSY2ac6cCF1y
           approval:
             type: manual
           jobs:
