@@ -30,7 +30,7 @@ resource "aws_route" "default-vpc" {
 }
 
 resource "aws_subnet" "frontend" {
-  count        = lenght(var.frontend_subnet)
+  count        = length(var.frontend_subnet)
   vpc_id       = aws_vpc.main.id
   cidr_block   = var.frontend_subnet[count.index]
   availability_zones = var.availability_zones[count.index]
