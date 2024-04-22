@@ -187,7 +187,7 @@ resource "aws_lb_listener" "front_end-HTTP" {
 }
 
 resource "aws_lb_listener" "front_end-HTTPS" {
-  count            = var.lb_needed && var.component != "frontend" ? 1 : 0
+  count            = var.lb_needed && var.component == "frontend" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
   protocol          = "HTTP"
@@ -204,7 +204,7 @@ resource "aws_lb_listener" "front_end-HTTPS" {
 }
 
 resource "aws_lb_listener" "back_end" {
-  count            = var.lb_needed && var.component == "frontend" ? 1 : 0
+  count            = var.lb_needed && var.component != "frontend" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
   protocol          = "HTTP"
