@@ -6,21 +6,21 @@ resource "aws_security_group" "main" {
   ingress {
     from_port   = var.app_port
     to_port     = var.app_port
-    protocol    = "-1"
+    protocol    = "TCP"
     cidr_blocks = var.server_app_port_sg_cidr
   }
 
   ingress {
     from_port   = 22
     to_port     = 22
-    protocol    = "-1"
+    protocol    = "TCP"
     cidr_blocks = var.bastion_nodes
   }
 
   ingress {
     from_port   = 9100
     to_port     = 9100
-    protocol    = "-1"
+    protocol    = "TCP"
     cidr_blocks = var.prometheus_nodes
   }
 
@@ -108,14 +108,14 @@ resource "aws_route53_record" "load-balancer" {
 
 resource "aws_security_group" "load-balancer" {
   count       = var.lb_needed ? 1 : 0
-  name        = "${var.component}-${var.env}-sg"
-  description = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-lb-sg"
+  description = "${var.component}-${var.env}-lb-sg"
   vpc_id      = var.vpc_id
 
   ingress {
     from_port   = var.app_port
     to_port     = var.app_port
-    protocol    = "-1"
+    protocol    = "TCP"
     cidr_blocks = var.lb_app_port_sg_cidr
   }
 
