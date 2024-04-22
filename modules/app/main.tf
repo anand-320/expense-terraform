@@ -22,7 +22,7 @@ resource "aws_security_group" "main" {
   }
 }
 
-  resource "aws_instance" "instance" {
+resource "aws_instance" "instance" {
   ami                    = data.aws_ami.ami.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
@@ -40,6 +40,12 @@ resource "aws_security_group" "main" {
     Name    = var.component
     monitor = "yes"
     env     = var.env
+  }
+
+  lifecycle {
+    ignore_changes = [
+      ami
+    ]
   }
 }
 
