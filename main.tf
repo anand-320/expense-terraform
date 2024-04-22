@@ -61,10 +61,10 @@ module "vpc" {
   default_vpc_id    = var.default_vpc_id
   default_vpc_cidr  = var.default_vpc_cidr
   default_route_table_id = var.default_route_table_id
-  frontend_subnet        = var.frontend_subnets
-  backend_subnet         = var.backend_subnets
-  db_subnet              = var.db_subnets
+  frontend_subnets        = var.frontend_subnets
+  backend_subnets         = var.backend_subnets
+  db_subnets              = var.db_subnets
   availability_zones     = var.availability_zones
-  public_subnet          = var.public_subnets
+  public_subnets          = var.public_subnets
 }
 
