@@ -116,7 +116,7 @@ resource "aws_security_group" "load-balancer" {
     for_each = var.lb_ports
     content {
       from_port   = ingress.value
-      to_port     = var.app_port
+      to_port     = ingress.value
       protocol    = "TCP"
       cidr_blocks = var.lb_app_port_sg_cidr
     }
