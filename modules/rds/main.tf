@@ -12,6 +12,7 @@ resource "aws_db_instance" "main" {
   storage_type         = var.storage_type
   publicly_accessible  = false
   db_subnet_group_name = aws_db_subnet_group.default.name
+  allocated_storage    = var.allocated_storage
 }
 
 resource "aws_db_parameter_group" "main" {
