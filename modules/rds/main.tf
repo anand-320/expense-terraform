@@ -14,6 +14,8 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name = aws_db_subnet_group.default.name
   allocated_storage    = var.allocated_storage
   vpc_security_group_ids = [aws_security_group.main.id]
+  storage_encrypted    = true
+  kms_key_id           = var.kms_key_id
 }
 
 resource "aws_db_parameter_group" "main" {
