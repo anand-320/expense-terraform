@@ -50,33 +50,6 @@ resource "aws_instance" "instance" {
     }
   }
 
-  tags = {
-    Name    = var.component
-    monitor = "yes"
-    env     = var.env
-  }
-
-  lifecycle {
-    ignore_changes = [
-      ami
-    ]
-  }
-}
-
-}resource "aws_instance" "instance" {
-  ami                    = data.aws_ami.ami.image_id
-  instance_type          = var.instance_type
-  vpc_security_group_ids = [aws_security_group.main.id]
-  subnet_id              = var.subnets[0]
-
-  instance_market_options {
-    market_type = "spot"
-    spot_options {
-      instance_interruption_behavior = "stop"
-      spot_instance_type             = "persistent"
-    }
-  }
-
   root_block_device {
     encrypted  = true
     kms_key_id = var.kms_key_id
