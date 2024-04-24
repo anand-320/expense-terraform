@@ -18,6 +18,7 @@ module "frontend" {
   lb_app_port_sg_cidr = ["0.0.0.0/0"]
   certificate_arn     = var.certificate_arn
   lb_ports            = {http: 80, https: 443}
+  kms_key_id          = var.kms_key_id
 }
 
 module "backend" {
@@ -41,6 +42,7 @@ module "backend" {
   lb_app_port_sg_cidr = var.frontend_subnets
   certificate_arn     = var.certificate_arn
   lb_ports            = {http: 8080}
+  kms_key_id          = var.kms_key_id
 }
 
 module "rds" {
