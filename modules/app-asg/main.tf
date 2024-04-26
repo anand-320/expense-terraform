@@ -151,3 +151,45 @@ resource "aws_lb_target_group" "main" {
 #  ttl     = 30
 #}
 
+#resource "aws_lb_listener" "front_end-HTTP" {
+#  count            = var.lb_needed && var.lb_type == "public" ? 1 : 0
+#  load_balancer_arn = aws_lb.main[0].arn
+#  port              = "443"
+#  protocol          = "HTTPS"
+#  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+#  certificate_arn   = var.certificate_arn
+#
+#  default_action {
+#    type             = "forward"
+#    target_group_arn = aws_lb_target_group.main[0].arn
+#  }
+#}
+#
+#resource "aws_lb_listener" "front_end-HTTPS" {
+#  count            = var.lb_needed && var.lb_type == "public" ? 1 : 0
+#  load_balancer_arn = aws_lb.main[0].arn
+#  port              = var.app_port
+#  protocol          = "HTTP"
+#
+#  default_action {
+#    type = "redirect"
+#
+#    redirect {
+#      port        = "443"
+#      protocol    = "HTTPS"
+#      status_code = "HTTP_301"
+#    }
+#  }
+#}
+#
+#resource "aws_lb_listener" "back_end" {
+#  count            = var.lb_needed && var.lb_type != "public" ? 1 : 0
+#  load_balancer_arn = aws_lb.main[0].arn
+#  port              = var.app_port
+#  protocol          = "HTTP"
+#
+#  default_action {
+#    type             = "forward"
+#    target_group_arn = aws_lb_target_group.main[0].arn
+#  }
+#}
