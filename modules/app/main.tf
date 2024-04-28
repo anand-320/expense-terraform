@@ -183,7 +183,7 @@ resource "aws_lb_target_group_attachment" "main" {
 }
 
 
-resource "aws_lb_listener" "frontend-http" {
+resource "aws_lb_listener" "frontend-https" {
   count            = var.lb_needed && var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = "443"

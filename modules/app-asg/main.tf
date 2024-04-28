@@ -167,7 +167,7 @@ resource "aws_lb_listener" "frontend-http" {
   }
 }
 
-resource "aws_lb_listener" "frontend-http" {
+resource "aws_lb_listener" "frontend-https" {
   count            = var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = "443"
