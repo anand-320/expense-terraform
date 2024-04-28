@@ -50,6 +50,7 @@ resource "aws_launch_template" "main" {
 
 }
 
+
 resource "aws_autoscaling_group" "main" {
   name                = "${var.component}-${var.env}"
   desired_capacity    = var.min_capacity
@@ -68,6 +69,7 @@ resource "aws_autoscaling_group" "main" {
     propagate_at_launch = true
     value               = "${var.component}-${var.env}"
   }
+
 }
 
 resource "aws_autoscaling_policy" "main" {
@@ -79,7 +81,6 @@ resource "aws_autoscaling_policy" "main" {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
-
     target_value = 50.0
   }
 }
@@ -98,7 +99,6 @@ resource "aws_lb_target_group" "main" {
     port                = var.app_port
     timeout             = 2
     unhealthy_threshold = 2
-
   }
 }
 
@@ -141,6 +141,7 @@ resource "aws_lb" "main" {
   }
 }
 
+
 resource "aws_route53_record" "load-balancer" {
   name    = "${var.component}-${var.env}"
   type    = "CNAME"
@@ -149,21 +150,7 @@ resource "aws_route53_record" "load-balancer" {
   ttl     = 30
 }
 
-resource "aws_lb_listener" "front_end-HTTP" {
-  count            = var.lb_type == "public" ? 1 : 0
-  load_balancer_arn = aws_lb.main.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = var.certificate_arn
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.main.arn
-  }
-}
-
-resource "aws_lb_listener" "front_end-HTTPS" {
+resource "aws_lb_listener" "frontend-http" {
   count            = var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = var.app_port
@@ -180,7 +167,22 @@ resource "aws_lb_listener" "front_end-HTTPS" {
   }
 }
 
-resource "aws_lb_listener" "back_end" {
+resource "aws_lb_listener" "frontend-http" {
+  count            = var.lb_type == "public" ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = var.certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+
+}
+
+resource "aws_lb_listener" "backend" {
   count            = var.lb_type != "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = var.app_port

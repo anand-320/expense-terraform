@@ -183,7 +183,7 @@ resource "aws_lb_target_group_attachment" "main" {
 }
 
 
-resource "aws_lb_listener" "front_end-HTTP" {
+resource "aws_lb_listener" "frontend-http" {
   count            = var.lb_needed && var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = "443"
@@ -197,7 +197,7 @@ resource "aws_lb_listener" "front_end-HTTP" {
   }
 }
 
-resource "aws_lb_listener" "front_end-HTTPS" {
+resource "aws_lb_listener" "frontend-http" {
   count            = var.lb_needed && var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
@@ -214,7 +214,7 @@ resource "aws_lb_listener" "front_end-HTTPS" {
   }
 }
 
-resource "aws_lb_listener" "back_end" {
+resource "aws_lb_listener" "backend" {
   count            = var.lb_needed && var.lb_type != "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
