@@ -37,9 +37,9 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_launch_template" "main" {
-  name                = "${var.component}-${var.env}"
-  image_id            = data.aws_ami.ami.id
-  instance_type       = var.instance_type
+  name                   = "${var.component}-${var.env}"
+  image_id               = data.aws_ami.ami.id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "main" {
   max_size            = var.max_capacity
   min_size            = var.min_capacity
   vpc_zone_identifier = var.subnets
-  target_group_arns  = [aws_lb_target_group.main.arn]
+  target_group_arns   = [aws_lb_target_group.main.arn]
 
   launch_template {
     id      = aws_launch_template.main.id
@@ -66,8 +66,8 @@ resource "aws_autoscaling_group" "main" {
 
   tag {
     key                 = "Name"
-    propagate_at_launch = true
     value               = "${var.component}-${var.env}"
+    propagate_at_launch = true
   }
 
 }
@@ -75,7 +75,7 @@ resource "aws_autoscaling_group" "main" {
 resource "aws_autoscaling_policy" "main" {
   name                   = "target-cpu"
   autoscaling_group_name = aws_autoscaling_group.main.name
-  policy_type = "TargetTrackingScaling"
+  policy_type            = "TargetTrackingScaling"
 
   target_tracking_configuration {
     predefined_metric_specification {
@@ -151,7 +151,7 @@ resource "aws_route53_record" "load-balancer" {
 }
 
 resource "aws_lb_listener" "frontend-http" {
-  count            = var.lb_type == "public" ? 1 : 0
+  count             = var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = var.app_port
   protocol          = "HTTP"
@@ -165,10 +165,11 @@ resource "aws_lb_listener" "frontend-http" {
       status_code = "HTTP_301"
     }
   }
+
 }
 
 resource "aws_lb_listener" "frontend-https" {
-  count            = var.lb_type == "public" ? 1 : 0
+  count             = var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -183,7 +184,7 @@ resource "aws_lb_listener" "frontend-https" {
 }
 
 resource "aws_lb_listener" "backend" {
-  count            = var.lb_type != "public" ? 1 : 0
+  count             = var.lb_type != "public" ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = var.app_port
   protocol          = "HTTP"
@@ -192,5 +193,5 @@ resource "aws_lb_listener" "backend" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.main.arn
   }
-}
 
+}
