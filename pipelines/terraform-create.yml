@@ -23,3 +23,17 @@ pipelines:
               tasks:
               - exec: {command: terraform, arguments: [ "init", "-backend-config=env-dev/state.tfvars" ], run_if: passed}
               - exec: {command: terraform, arguments: [ "apply", "-var-file=env-dev/main.tfvars", "-auto-approve" ], run_if: passed}
+
+      - prod:
+          fetch_materials: true
+          environment_variables:
+            env: prod
+            TF_VAR_vault_token: hvs.rmuLFsX9cdGvHSY2ac6cCF1y
+          approval:
+            type: success
+          jobs:
+            terraform-apply:
+              tasks:
+                - exec: { command: terraform, arguments: [ "init", "-backend-config=env-prod/state.tfvars" ], run_if: passed }
+                - exec: { command: terraform, arguments: [ "apply", "-var-file=env-prod/main.tfvars", "-auto-approve" ], run_if: passed }
+
