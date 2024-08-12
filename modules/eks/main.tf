@@ -9,16 +9,12 @@ resource "aws_eks_cluster" "cluster" {
 
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.cluster.name
-  node_group_name = "${var.env}-eks-ng-1"
+  node_group_name = "${var.env}-eks-ng"
   node_role_arn   = aws_iam_role.node-role.arn
   subnet_ids      = var.subnet_ids
   capacity_type   = "SPOT"
   instance_types  = ["t3.large"]
 
-  launch_template {
-    name    = "eks-${var.env}"
-    version = "$Latest"
-  }
 
   scaling_config {
     desired_size = 1
