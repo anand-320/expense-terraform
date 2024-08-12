@@ -16,3 +16,4 @@ variable "lb_app_port_sg_cidr" {}
 variable "lb_subnets" {}
 variable "certificate_arn" {}
 variable "zone_id" {}
+variable "kms_key_id" {}
