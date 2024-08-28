@@ -60,3 +60,15 @@ resource "aws_eks_node_group" "main" {
     max_unavailable = 1
   }
 }
+
+resource "null_resource" "aws-auth" {
+
+  depends_on = [aws_eks_node_group.main]
+
+  provisioner "local-exec" {
+    command = <<EOF
+aws eks update-kubeconfig --name "${var.env}-eks"
+aws-auth upsert --maproles --rolearn arn:aws:iam::942136769355:role/ci-server-role --username system:node:{{EC2PrivateDNSName}} --groups system:masters
+EOF
+  }
+}
